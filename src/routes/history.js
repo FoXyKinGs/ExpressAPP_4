@@ -7,7 +7,7 @@ const { getAllHistory: allHistoryRedis } = require('../helpers/history')
 route
     .get('/history', authentication, allHistoryRedis ,getAllHistory)
     .get('/detailhistory/:id', authentication, authorizationAdmin, detailHistory)
-    .post('/history',authentication, authorizationAdmin , insertHistory)
+    .post('/history',authentication, insertHistory)
     .put('/history/:id',authentication, authorizationAdmin, updateHistory)
     .delete('/history/:id',authentication, authorizationAdmin, deleteHistory)
 module.exports = route
