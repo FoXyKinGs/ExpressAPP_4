@@ -6,8 +6,8 @@ const { getAllProduct: redisAllProduct } = require('../helpers/product')
 const singleUpload = require('../helpers/middleware/upload')
 
 route
-    .get('/product', authentication, authorizationAdmin, redisAllProduct ,getAllProduct)
-    .get('/detailproduct/:id', authentication, authorizationCashier ,detailProduct)
+    .get('/product', authentication, redisAllProduct ,getAllProduct)
+    .get('/detailproduct/:id', authentication, authorizationAdmin, detailProduct)
     .post('/product', authentication, singleUpload, insertProduct)
     .put('/product/:id', authentication, singleUpload, updateProduct)
     .delete('/product/:id', authentication, deleteProduct)

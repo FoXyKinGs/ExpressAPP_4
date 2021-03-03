@@ -18,6 +18,7 @@ app.use(product)
 app.use(category)
 app.use(history)
 app.use(users)
+app.use('/images', express.static('./public/images'))
 
 app.listen(process.env.PORT, ()=> {
     console.log("Server is running")

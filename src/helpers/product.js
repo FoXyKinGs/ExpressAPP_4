@@ -27,7 +27,7 @@ module.exports = {
                         page: page,
                         limit: limit,
                         totalData: response.length,
-                        totalPage: Math.ceil(response.length / limit)
+                        totalPage: Math.ceil(filterData.length / limit)
                     }
                     success(res, 'Succes get all product', pagination, paginationData)
                 }else{

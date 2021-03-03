@@ -26,16 +26,5 @@ module.exports = {
                 }
             })
         })
-    },
-    modelChangePassword : (data, email) => {
-        return new Promise((resolve, reject) => {
-            conn.query(`UPDATE users SET password = '${data}' WHERE email = '${email}'`, (err, result) =>{
-                if(err){
-                    reject(new Error())
-                }else{
-                    resolve(result)
-                }
-            })
-        })
     }
 }

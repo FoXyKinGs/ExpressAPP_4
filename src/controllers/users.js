@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const { json } = require('body-parser')
 const { response } = require('express')
 const { failed, success } = require('../helpers/response')
-const { modelRegister, modelCheckEmail, modelChangePassword } = require('../models/users')
+const { modelRegister, modelCheckEmail } = require('../models/users')
 const jwt = require('jsonwebtoken') 
 
 module.exports = {
@@ -13,12 +13,14 @@ module.exports = {
                 const checkPassword = await bcrypt.compare(body.password, response[0].password)
                 if(checkPassword){
                     const dataUser = {
+                        name: response[0].name,
                         email: response[0].email,
                         id: response[0].id,
                         access: response[0].access 
                     }
                     const token = jwt.sign(dataUser, process.env.JWT_SECRET)
-                    success(res, 'Login success', [], token)
+                    const result = {dataUser, token}
+                    success(res, 'Login success', [], result)
                 }else{
                     failed(res, 'Failed to login, password wrong', [])
                 }
@@ -53,25 +55,5 @@ module.exports = {
         }).catch((err) => {
             failed(res, 'Internal server error', [])
         })        
-    },
-
-    changePassword: async(req, res) => {
-        const val = req.params.email
-        const body = req.body
-        modelCheckEmail(val).then(async(response) => {
-            if(response.length < 1){
-                failed(res, 'Email not registered')
-            }else{
-               const salt = await bcrypt.genSalt(10)
-               const password = await bcrypt.hash(body.password, salt)
-            modelChangePassword(password, val).then((response) => {
-                success(res, 'Change password success', [], [])
-            }).catch((err) => {
-                failed(res, 'Cannot change password', [])
-            })
-            }
-        }).catch((err) => [
-            failed(res, 'Internal server error', [])
-        ])
     }
 }

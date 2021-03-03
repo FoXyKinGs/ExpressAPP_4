@@ -6,7 +6,7 @@ module.exports = {
             pagination,
             data
         }
-        res.json(response)
+        res.status(200).send(response)
     },
     failed: (res, message, data) => {
         const response = {
@@ -14,7 +14,8 @@ module.exports = {
             message,
             data
         }
-        res.json(response)
+        res.status(500).send(response.message)
+        
     },
     notFound: (res, message, data) => {
         const response = {
@@ -22,7 +23,7 @@ module.exports = {
             message,
             data
         }
-        res.json(response)
+        res.status(404).send(response.message)
     },
     noContent: (res, message, data) => {
         const response = {
@@ -30,20 +31,20 @@ module.exports = {
             message,
             data
         }
-        res.json(response)
+        res.status(204).send(response.message)
     },
     forbidden: (res, message) => {
         const response = {
             code : 403,
             message
         }
-        res.json(response)
+        res.status(403).send(response.message)
     },
     unauthorized: (res, message) => {
         const response = {
             code : 401,
             message
         }
-        res.json(response)
+        res.status(401).send(response.message)
     }
 }
